@@ -1,6 +1,6 @@
 // Supabase Configuration
-const supabaseUrl = 'https://mmvacfsvwqjtjrqbbray.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1tdmFjZnN2d3FqdGpycWJicmF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0Njg1NjQsImV4cCI6MjA3MDA0NDU2NH0.r5w61FcNlk3do4Ed7I9HyqCoQDrAvdFlJmHyYOyClk8';
+//const supabaseUrl = 
+// const supabaseKey = ;
 
 // Create Supabase client
 try {
@@ -87,4 +87,5 @@ try {
 
 } catch (error) {
     console.error('Failed to initialize Supabase client:', error);
+
 }
