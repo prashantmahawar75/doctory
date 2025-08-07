@@ -1,0 +1,271 @@
+/* Advanced Component Styles */
+
+/* Dashboard Cards with Hover Effects */
+.dashboard-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+}
+
+/* Modern Table Styles */
+.table-responsive {
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modern-table th {
+    background: var(--light-color);
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--dark-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.modern-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.modern-table tbody tr:hover {
+    background-color: rgba(66, 133, 244, 0.05);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-confirmed {
+    background: rgba(52, 168, 83, 0.1);
+    color: var(--secondary-color);
+}
+
+.status-confirmed::before {
+    background: var(--secondary-color);
+}
+
+.status-pending {
+    background: rgba(251, 188, 4, 0.1);
+    color: var(--warning-color);
+}
+
+.status-pending::before {
+    background: var(--warning-color);
+}
+
+.status-cancelled {
+    background: rgba(234, 67, 53, 0.1);
+    color: var(--accent-color);
+}
+
+.status-cancelled::before {
+    background: var(--accent-color);
+}
+
+/* Search and Filter Section */
+.search-filter-section {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 20px;
+    padding-left: 40px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+.search-box::before {
+    content: '🔍';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-color);
+}
+
+/* Filter Dropdown */
+.filter-dropdown {
+    position: relative;
+    min-width: 150px;
+}
+
+.filter-dropdown select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    background: white;
+    font-size: 16px;
+    appearance: none;
+    cursor: pointer;
+}
+
+.filter-dropdown::after {
+    content: '▼';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-color);
+    pointer-events: none;
+    font-size: 12px;
+}
+
+/* Doctor/Patient Cards */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.profile-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.profile-card-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: white;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.profile-card-body {
+    padding: 20px;
+}
+
+.profile-card-info {
+    margin-bottom: 15px;
+}
+
+.profile-card-info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.profile-card-info-label {
+    color: var(--gray-color);
+}
+
+.profile-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-filter-section {
+        flex-direction: column;
+    }
+    
+    .search-box, .filter-dropdown {
+        width: 100%;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-in {
+    animation: slideIn 0.5s ease forwards;
+}

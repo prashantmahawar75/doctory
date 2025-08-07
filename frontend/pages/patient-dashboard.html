@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - Doctory</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="../index.html" class="logo">Doctory</a>
+                <ul class="nav-links">
+                    <li><a href="patient-dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="patient-profile.html">Profile</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="dashboard">
+                <aside class="sidebar">
+                    <div class="user-info">
+                        <div class="user-avatar">👤</div>
+                        <h3 id="patientName">Patient Name</h3>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a href="patient-dashboard.html" class="active">Dashboard</a></li>
+                        <li><a href="patient-book-appointment.html">Book Appointment</a></li>
+                        <li><a href="patient-appointments.html">My Appointments</a></li>
+                        <li><a href="patient-doctors.html">Find Doctors</a></li>
+                        <li><a href="patient-profile.html">Profile</a></li>
+                        <li><a href="#" id="sidebarLogoutBtn">Logout</a></li>
+                    </ul>
+                </aside>
+
+                <div class="main-content">
+                    <h1>Patient Dashboard</h1>
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="upcomingAppointmentsCount">0</div>
+                            <div class="stat-label">Upcoming Appointments</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pastAppointmentsCount">0</div>
+                            <div class="stat-label">Past Appointments</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="favoriteDoctorsCount">0</div>
+                            <div class="stat-label">Favorite Doctors</div>
+                        </div>
+                    </div>
+
+                    <div class="upcoming-appointments">
+                        <div class="section-header">
+                            <h2>Upcoming Appointments</h2>
+                            <a href="patient-appointments.html" class="btn btn-primary">View All</a>
+                        </div>
+                        <div class="appointment-list" id="upcomingAppointmentsList">
+                            <!-- Appointments will be loaded here -->
+                            <div class="loading-indicator">Loading appointments...</div>
+                        </div>
+                    </div>
+
+                    <div class="quick-book-section">
+                        <div class="section-header">
+                            <h2>Quick Book Appointment</h2>
+                            <a href="patient-book-appointment.html" class="btn btn-primary">Advanced Booking</a>
+                        </div>
+                        <div class="quick-book-form">
+                            <div class="form-group">
+                                <label for="specialtyFilter" class="form-label">Specialty</label>
+                                <select id="specialtyFilter" class="form-control">
+                                    <option value="">All Specialties</option>
+                                    <option value="cardiology">Cardiology</option>
+                                    <option value="dermatology">Dermatology</option>
+                                    <option value="neurology">Neurology</option>
+                                    <option value="orthopedics">Orthopedics</option>
+                                    <option value="pediatrics">Pediatrics</option>
+                                    <option value="psychiatry">Psychiatry</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateFilter" class="form-label">Date</label>
+                                <input type="date" id="dateFilter" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <button id="searchAvailabilityBtn" class="btn btn-primary">Search Availability</button>
+                            </div>
+                        </div>
+                        <div class="available-doctors" id="availableDoctorsContainer">
+                            <!-- Available doctors will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="favorite-doctors">
+                        <div class="section-header">
+                            <h2>Your Favorite Doctors</h2>
+                            <a href="patient-doctors.html" class="btn btn-primary">Find More Doctors</a>
+                        </div>
+                        <div class="doctors-grid" id="favoriteDoctorsGrid">
+                            <!-- Favorite doctors will be loaded here -->
+                            <div class="loading-indicator">Loading favorite doctors...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Doctory</h3>
+                    <p>Doctor Scheduling Application</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@doctory.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Doctory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/patient-dashboard.js"></script>
+</body>
+</html>

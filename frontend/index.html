@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctory - Doctor Scheduling Application</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Doctory</a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="pages/about.html">About</a></li>
+                    <li><a href="pages/contact.html">Contact</a></li>
+                    <li><a href="pages/auth.html" class="btn btn-primary" id="authBtn">Sign In</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Efficient Doctor Scheduling & Patient Appointments</h1>
+                    <p>Streamline your medical practice with our easy-to-use scheduling system. Manage doctor availability and patient appointments in one place.</p>
+                    <div class="hero-buttons">
+                        <a href="pages/auth.html?type=doctor" class="btn btn-primary">I'm a Doctor</a>
+                        <a href="pages/auth.html?type=patient" class="btn btn-secondary">I'm a Patient</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Key Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3>Easy Scheduling</h3>
+                        <p>Doctors can set their availability with a few clicks. Patients can book appointments in available time slots.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔔</div>
+                        <h3>Notifications</h3>
+                        <p>Get reminders about upcoming appointments and schedule changes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Access your schedule and appointments from any device, anywhere.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure Access</h3>
+                        <p>Separate interfaces for doctors and patients with secure authentication.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Doctory</h3>
+                    <p>Doctor Scheduling Application</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="pages/about.html">About</a></li>
+                        <li><a href="pages/contact.html">Contact</a></li>
+                        <li><a href="pages/auth.html">Sign In</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@doctory.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Doctory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

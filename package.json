@@ -1,0 +1,23 @@
+{
+  "name": "doctory",
+  "version": "1.0.0",
+  "description": "Doctor Schedule and Patient Appointment Application",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "build": "cd backend && npm run build",
+    "install:backend": "cd backend && npm install"
+  },
+  "keywords": [
+    "doctor",
+    "schedule",
+    "appointment",
+    "healthcare"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.53.0"
+  }
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Doctory</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="../index.html" class="logo">Doctory</a>
+                <ul class="nav-links">
+                    <li><a href="doctor-dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="doctor-profile.html">Profile</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="dashboard">
+                <aside class="sidebar">
+                    <div class="user-info">
+                        <div class="user-avatar">👨‍⚕️</div>
+                        <h3 id="doctorName">Dr. Name</h3>
+                        <p id="doctorSpecialty">Specialty</p>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a href="doctor-dashboard.html" class="active">Dashboard</a></li>
+                        <li><a href="doctor-schedule.html">Manage Schedule</a></li>
+                        <li><a href="doctor-appointments.html">Appointments</a></li>
+                        <li><a href="doctor-patients.html">Patients</a></li>
+                        <li><a href="doctor-profile.html">Profile</a></li>
+                        <li><a href="#" id="sidebarLogoutBtn">Logout</a></li>
+                    </ul>
+                </aside>
+
+                <div class="main-content">
+                    <h1>Doctor Dashboard</h1>
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="todayAppointments">0</div>
+                            <div class="stat-label">Today's Appointments</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="weekAppointments">0</div>
+                            <div class="stat-label">This Week</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalPatients">0</div>
+                            <div class="stat-label">Total Patients</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="availableSlots">0</div>
+                            <div class="stat-label">Available Slots</div>
+                        </div>
+                    </div>
+
+                    <div class="upcoming-appointments">
+                        <div class="section-header">
+                            <h2>Upcoming Appointments</h2>
+                            <a href="doctor-appointments.html" class="btn btn-primary">View All</a>
+                        </div>
+                        <div class="appointment-list" id="upcomingAppointmentsList">
+                            <!-- Appointments will be loaded here -->
+                            <div class="loading-indicator">Loading appointments...</div>
+                        </div>
+                    </div>
+
+                    <div class="calendar-section">
+                        <div class="section-header">
+                            <h2>Schedule Calendar</h2>
+                            <a href="doctor-schedule.html" class="btn btn-primary">Manage Schedule</a>
+                        </div>
+                        <div class="calendar">
+                            <div class="calendar-header">
+                                <div class="calendar-nav">
+                                    <button id="prevMonth">&lt;</button>
+                                    <h3 class="calendar-title" id="currentMonth">Month Year</h3>
+                                    <button id="nextMonth">&gt;</button>
+                                </div>
+                                <div class="calendar-view-options">
+                                    <button class="btn btn-secondary active" id="monthViewBtn">Month</button>
+                                    <button class="btn btn-secondary" id="weekViewBtn">Week</button>
+                                    <button class="btn btn-secondary" id="dayViewBtn">Day</button>
+                                </div>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid">
+                                <!-- Calendar will be generated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Doctory</h3>
+                    <p>Doctor Scheduling Application</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@doctory.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Doctory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/doctor-dashboard.js"></script>
+</body>
+</html>

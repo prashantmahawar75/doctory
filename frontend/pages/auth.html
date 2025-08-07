@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - Doctory</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <!-- Initialize Firebase -->
+    <script src="../js/firebase-config.js"></script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.js"></script>
+    <script src="../js/error-handler.js"></script>
+    <script src="../js/supabase-config.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="../index.html" class="logo">Doctory</a>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" id="loginTab">Login</div>
+                    <div class="auth-tab" id="registerTab">Register</div>
+                </div>
+                <div class="card">
+                    <div id="userTypeIndicator" class="user-type-indicator"></div>
+                    
+                    <!-- Login Form -->
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" id="loginEmail" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" id="loginPassword" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </div>
+                        <div class="form-group text-center">
+                            <a href="#" id="forgotPassword">Forgot Password?</a>
+                        </div>
+                    </form>
+                    
+                    <!-- Register Form -->
+                    <form id="registerForm" class="auth-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="registerName" class="form-label">Full Name</label>
+                            <input type="text" id="registerName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" id="registerEmail" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" id="registerPassword" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" id="registerConfirmPassword" class="form-control" required>
+                        </div>
+                        <div id="doctorFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="specialization" class="form-label">Specialization</label>
+                                <input type="text" id="specialization" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="licenseNumber" class="form-label">License Number</label>
+                                <input type="text" id="licenseNumber" class="form-control">
+                            </div>
+                        </div>
+                        <div id="patientFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                                <input type="date" id="dateOfBirth" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber" class="form-label">Phone Number</label>
+                                <input type="tel" id="phoneNumber" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Doctory</h3>
+                    <p>Doctor Scheduling Application</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="auth.html">Sign In</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@doctory.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Doctory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>

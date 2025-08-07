@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Schedule - Doctory</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="../index.html" class="logo">Doctory</a>
+                <ul class="nav-links">
+                    <li><a href="doctor-dashboard.html">Dashboard</a></li>
+                    <li><a href="doctor-schedule.html" class="active">Schedule</a></li>
+                    <li><a href="doctor-profile.html">Profile</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="dashboard">
+                <aside class="sidebar">
+                    <div class="user-info">
+                        <div class="user-avatar">👨‍⚕️</div>
+                        <h3 id="doctorName">Dr. Name</h3>
+                        <p id="doctorSpecialty">Specialty</p>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a href="doctor-dashboard.html">Dashboard</a></li>
+                        <li><a href="doctor-schedule.html" class="active">Manage Schedule</a></li>
+                        <li><a href="doctor-appointments.html">Appointments</a></li>
+                        <li><a href="doctor-patients.html">Patients</a></li>
+                        <li><a href="doctor-profile.html">Profile</a></li>
+                        <li><a href="#" id="sidebarLogoutBtn">Logout</a></li>
+                    </ul>
+                </aside>
+
+                <div class="main-content">
+                    <h1>Manage Your Schedule</h1>
+                    
+                    <div class="schedule-tools">
+                        <div class="tool-section">
+                            <h2>Quick Actions</h2>
+                            <div class="quick-actions">
+                                <button id="setRegularHoursBtn" class="btn btn-primary">Set Regular Hours</button>
+                                <button id="blockTimeOffBtn" class="btn btn-secondary">Block Time Off</button>
+                                <button id="clearScheduleBtn" class="btn btn-danger">Clear Schedule</button>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-section">
+                            <h2>Date Range</h2>
+                            <div class="date-range-selector">
+                                <div class="form-group">
+                                    <label for="startDate" class="form-label">Start Date</label>
+                                    <input type="date" id="startDate" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="endDate" class="form-label">End Date</label>
+                                    <input type="date" id="endDate" class="form-control">
+                                </div>
+                                <button id="applyDateRangeBtn" class="btn btn-primary">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-calendar">
+                        <div class="calendar-header">
+                            <div class="calendar-nav">
+                                <button id="prevWeek">&lt;</button>
+                                <h3 class="calendar-title" id="currentWeek">Week of Month Day, Year</h3>
+                                <button id="nextWeek">&gt;</button>
+                            </div>
+                            <div class="calendar-view-options">
+                                <button class="btn btn-secondary" id="monthViewBtn">Month</button>
+                                <button class="btn btn-secondary active" id="weekViewBtn">Week</button>
+                                <button class="btn btn-secondary" id="dayViewBtn">Day</button>
+                            </div>
+                        </div>
+                        <div class="week-schedule" id="weekSchedule">
+                            <!-- Week schedule will be generated here -->
+                            <div class="loading-indicator">Loading schedule...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="time-slot-editor">
+                        <h2>Add Time Slots</h2>
+                        <form id="addTimeSlotForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="slotDate" class="form-label">Date</label>
+                                    <input type="date" id="slotDate" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="startTime" class="form-label">Start Time</label>
+                                    <input type="time" id="startTime" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="endTime" class="form-label">End Time</label>
+                                    <input type="time" id="endTime" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="slotDuration" class="form-label">Slot Duration (minutes)</label>
+                                    <select id="slotDuration" class="form-control" required>
+                                        <option value="15">15 minutes</option>
+                                        <option value="30" selected>30 minutes</option>
+                                        <option value="45">45 minutes</option>
+                                        <option value="60">60 minutes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="repeatOptions" class="form-label">Repeat</label>
+                                    <select id="repeatOptions" class="form-control">
+                                        <option value="none">No Repeat</option>
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="biweekly">Bi-weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="repeatUntilGroup" style="display: none;">
+                                    <label for="repeatUntil" class="form-label">Repeat Until</label>
+                                    <input type="date" id="repeatUntil" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="slotNotes" class="form-label">Notes</label>
+                                    <input type="text" id="slotNotes" class="form-control" placeholder="Optional notes for these slots">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Add Time Slots</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="regular-hours-modal" id="regularHoursModal" style="display: none;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>Set Regular Hours</h2>
+                                <button id="closeRegularHoursModal" class="close-btn">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="regularHoursForm">
+                                    <div class="weekday-hours">
+                                        <div class="weekday-row" id="monday">
+                                            <div class="weekday-name">
+                                                <input type="checkbox" id="mondayEnabled" checked>
+                                                <label for="mondayEnabled">Monday</label>
+                                            </div>
+                                            <div class="weekday-times">
+                                                <input type="time" id="mondayStart" class="form-control" value="09:00">
+                                                <span>to</span>
+                                                <input type="time" id="mondayEnd" class="form-control" value="17:00">
+                                            </div>
+                                        </div>
+                                        <div class="weekday-row" id="tuesday">
+                                            <div class="weekday-name">
+                                                <input type="checkbox" id="tuesdayEnabled" checked>
+                                                <label for="tuesdayEnabled">Tuesday</label>
+                                            </div>
+                                            <div class="weekday-times">
+                                                <input type="time" id="tuesdayStart" class="form-control" value="09:00">
+                                                <span>to</span>
+                                                <input type="time" id="tuesdayEnd" class="form-control" value="17:00">
+                                            </div>
+                                        </div>
+                                        <div class="weekday-row" id="wednesday">
+                                            <div class="weekday-name">
+                                                <input type="checkbox" id="wednesdayEnabled" checked>
+                                                <label for="wednesdayEnabled">Wednesday</label>
+                                            </div>
+                                            <div class="weekday-times">
+                                                <input type="time" id="wednesdayStart" class="form-control" value="09:00">
+                                                <span>to</span>
+                                                <input type="time" id="wednesdayEnd" class="form-control" value="17:00">
+                                            </div>
+                                        </div>
+                                        <div class="weekday-row" id="thursday">
+                                            <div class="weekday-name">
+                                                <input type="checkbox" id="thursdayEnabled" checked>
+                                                <label for="thursdayEnabled">Thursday</label>
+                                            </div>
+                                            <div class="weekday-times">
+                                                <input type="time" id="thursdayStart" class="form-control" value="09:00">
+                                                <span>to</span>
+                                                <input type="time" id="thursdayEnd" class="form-control" value="17:00">
+                                            </div>
+                                        </div>
+                                        <div class="weekday-row" id="friday">
+                                            <div class="weekday-name">
+                                                <input type="checkbox" id="fridayEnabled" checked>
+                                                <label for="fridayEnabled">Friday</label>
+                                            </div>
+                                            <div class="weekday-times">
+                                                <input type="time" id="fridayStart" class="form-control" value="09:00">
+                                                <span>to</span>
+                                                <input type="time" id="fridayEnd" class="form-control" value="17:00">
+                                            </div>
+                                        </div>
+                                        <div class="weekday-row" id="saturday">
+                                            <div class="weekday-name">
+                                                <input type="checkbox" id="saturdayEnabled">
+                                                <label for="saturdayEnabled">Saturday</label>
+                                            </div>
+                                            <div class="weekday-times">
+                                                <input type="time" id="saturdayStart" class="form-control" value="09:00">
+                                                <span>to</span>
+                                                <input type="time" id="saturdayEnd" class="form-control" value="13:00">
+                                            </div>
+                                        </div>
+                                        <div class="weekday-row" id="sunday">
+                                            <div class="weekday-name">
+                                                <input type="checkbox" id="sundayEnabled">
+                                                <label for="sundayEnabled">Sunday</label>
+                                            </div>
+                                            <div class="weekday-times">
+                                                <input type="time" id="sundayStart" class="form-control" value="09:00">
+                                                <span>to</span>
+                                                <input type="time" id="sundayEnd" class="form-control" value="13:00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="slotDurationRegular" class="form-label">Appointment Duration</label>
+                                        <select id="slotDurationRegular" class="form-control">
+                                            <option value="15">15 minutes</option>
+                                            <option value="30" selected>30 minutes</option>
+                                            <option value="45">45 minutes</option>
+                                            <option value="60">60 minutes</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="effectiveDate" class="form-label">Effective Date</label>
+                                        <input type="date" id="effectiveDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Save Regular Hours</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Doctory</h3>
+                    <p>Doctor Scheduling Application</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@doctory.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Doctory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/doctor-schedule.js"></script>
+</body>
+</html>

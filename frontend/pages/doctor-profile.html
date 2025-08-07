@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profile - Doctory</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Import createClient from the loaded Supabase script
+        const { createClient } = supabase;
+    </script>
+    
+    <!-- App Configuration -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/supabase-config.js"></script>
+
+    <!-- Loading indicator -->
+    <style>
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading.active {
+            display: flex;
+        }
+        .loading::after {
+            content: "Loading...";
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="../index.html" class="logo">Doctory</a>
+                <ul class="nav-links">
+                    <li><a href="doctor-dashboard.html">Dashboard</a></li>
+                    <li><a href="doctor-appointments.html">Appointments</a></li>
+                    <li><a href="doctor-patients.html">Patients</a></li>
+                    <li><a href="doctor-profile.html" class="active">Profile</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="profile-header">
+        <div class="container">
+            <div class="profile-info">
+                <div class="profile-avatar">
+                    👨‍⚕️
+                </div>
+                <div class="profile-details">
+                    <h1 id="doctorName">Dr. John Doe</h1>
+                    <div class="profile-meta">
+                        <span id="doctorSpecialty">Cardiologist</span>
+                        <span id="doctorLicense">License #12345</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="profile-content">
+                <div class="profile-main">
+                    <section class="profile-section">
+                        <h2>Personal Information</h2>
+                        <div class="profile-section-content">
+                            <div class="info-item">
+                                <div class="info-label">Full Name</div>
+                                <div class="info-value" id="fullName">Dr. John Doe</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Email</div>
+                                <div class="info-value" id="email">john.doe@example.com</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Specialty</div>
+                                <div class="info-value" id="specialty">Cardiology</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">License Number</div>
+                                <div class="info-value" id="licenseNumber">12345</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Experience</div>
+                                <div class="info-value" id="experience">15 years</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Phone</div>
+                                <div class="info-value" id="phone">+1 234 567 8900</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" style="margin-top: 20px;" onclick="editProfile()">Edit Profile</button>
+                    </section>
+
+                    <section class="profile-section">
+                        <h2>Schedule</h2>
+                        <div class="time-slots">
+                            <!-- Time slots will be populated dynamically -->
+                        </div>
+                        <button class="btn btn-primary" style="margin-top: 20px;" onclick="editSchedule()">Edit Schedule</button>
+                    </section>
+                </div>
+
+                <div class="profile-sidebar">
+                    <section class="profile-section">
+                        <h2>Statistics</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalPatients">150</div>
+                                <div class="stat-label">Total Patients</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalAppointments">450</div>
+                                <div class="stat-label">Total Appointments</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="upcomingAppointments">8</div>
+                                <div class="stat-label">Upcoming</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="rating">4.8</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="profile-section">
+                        <h2>Next Appointments</h2>
+                        <div class="appointment-list" id="upcomingAppointmentsList">
+                            <!-- Appointments will be populated dynamically -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/doctor-profile.js"></script>
+</body>
+</html>

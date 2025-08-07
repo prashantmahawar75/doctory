@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Doctory</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="../index.html" class="logo">Doctory</a>
+                <ul class="nav-links">
+                    <li><a href="patient-dashboard.html">Dashboard</a></li>
+                    <li><a href="patient-book-appointment.html" class="active">Book Appointment</a></li>
+                    <li><a href="patient-profile.html">Profile</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="dashboard">
+                <aside class="sidebar">
+                    <div class="user-info">
+                        <div class="user-avatar">👤</div>
+                        <h3 id="patientName">Patient Name</h3>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a href="patient-dashboard.html">Dashboard</a></li>
+                        <li><a href="patient-book-appointment.html" class="active">Book Appointment</a></li>
+                        <li><a href="patient-appointments.html">My Appointments</a></li>
+                        <li><a href="patient-doctors.html">Find Doctors</a></li>
+                        <li><a href="patient-profile.html">Profile</a></li>
+                        <li><a href="#" id="sidebarLogoutBtn">Logout</a></li>
+                    </ul>
+                </aside>
+
+                <div class="main-content">
+                    <h1>Book an Appointment</h1>
+                    
+                    <div class="booking-steps">
+                        <div class="step active" id="step1">1. Find Doctor</div>
+                        <div class="step" id="step2">2. Select Date & Time</div>
+                        <div class="step" id="step3">3. Confirm Details</div>
+                    </div>
+                    
+                    <!-- Step 1: Find Doctor -->
+                    <div class="booking-step-content" id="step1Content">
+                        <div class="doctor-search">
+                            <div class="search-filters">
+                                <div class="form-group">
+                                    <label for="specialtyFilter" class="form-label">Specialty</label>
+                                    <select id="specialtyFilter" class="form-control">
+                                        <option value="">All Specialties</option>
+                                        <option value="cardiology">Cardiology</option>
+                                        <option value="dermatology">Dermatology</option>
+                                        <option value="neurology">Neurology</option>
+                                        <option value="orthopedics">Orthopedics</option>
+                                        <option value="pediatrics">Pediatrics</option>
+                                        <option value="psychiatry">Psychiatry</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nameSearch" class="form-label">Doctor Name</label>
+                                    <input type="text" id="nameSearch" class="form-control" placeholder="Search by name">
+                                </div>
+                                <div class="form-group">
+                                    <button id="searchDoctorsBtn" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="doctors-list" id="doctorsList">
+                            <!-- Doctors will be loaded here -->
+                            <div class="loading-indicator">Loading doctors...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Select Date & Time -->
+                    <div class="booking-step-content" id="step2Content" style="display: none;">
+                        <div class="selected-doctor-info" id="selectedDoctorInfo">
+                            <!-- Selected doctor info will be displayed here -->
+                        </div>
+                        
+                        <div class="date-picker">
+                            <div class="date-picker-header">
+                                <button id="prevMonth">&lt;</button>
+                                <h3 id="currentMonth">Month Year</h3>
+                                <button id="nextMonth">&gt;</button>
+                            </div>
+                            <div class="date-picker-grid" id="datePickerGrid">
+                                <!-- Calendar will be generated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="time-slots" id="timeSlotsContainer">
+                            <h3>Available Time Slots</h3>
+                            <p id="selectDatePrompt">Please select a date to view available time slots</p>
+                            <div id="timeSlotsList" style="display: none;">
+                                <!-- Time slots will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <div class="booking-navigation">
+                            <button id="backToStep1" class="btn btn-secondary">Back</button>
+                            <button id="goToStep3" class="btn btn-primary" disabled>Continue</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Confirm Details -->
+                    <div class="booking-step-content" id="step3Content" style="display: none;">
+                        <div class="appointment-summary">
+                            <h3>Appointment Summary</h3>
+                            <div class="summary-card">
+                                <div class="summary-item">
+                                    <span class="summary-label">Doctor:</span>
+                                    <span class="summary-value" id="summaryDoctor"></span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Specialty:</span>
+                                    <span class="summary-value" id="summarySpecialty"></span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Date:</span>
+                                    <span class="summary-value" id="summaryDate"></span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Time:</span>
+                                    <span class="summary-value" id="summaryTime"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="appointment-details">
+                            <h3>Appointment Details</h3>
+                            <form id="appointmentDetailsForm">
+                                <div class="form-group">
+                                    <label for="appointmentReason" class="form-label">Reason for Visit</label>
+                                    <textarea id="appointmentReason" class="form-control" rows="3" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="appointmentNotes" class="form-label">Additional Notes (Optional)</label>
+                                    <textarea id="appointmentNotes" class="form-control" rows="2"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-checkbox">
+                                        <input type="checkbox" id="termsAgreement" required>
+                                        I agree to the <a href="#" id="viewTermsLink">terms and conditions</a>
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="booking-navigation">
+                            <button id="backToStep2" class="btn btn-secondary">Back</button>
+                            <button id="confirmAppointment" class="btn btn-primary">Confirm Appointment</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Booking Confirmation -->
+                    <div class="booking-confirmation" id="bookingConfirmation" style="display: none;">
+                        <div class="confirmation-icon">✓</div>
+                        <h2>Appointment Booked Successfully!</h2>
+                        <p>Your appointment has been confirmed. You will receive a confirmation email shortly.</p>
+                        <div class="confirmation-details" id="confirmationDetails">
+                            <!-- Confirmation details will be displayed here -->
+                        </div>
+                        <div class="confirmation-actions">
+                            <a href="patient-appointments.html" class="btn btn-primary">View My Appointments</a>
+                            <a href="patient-dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Doctory</h3>
+                    <p>Doctor Scheduling Application</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@doctory.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Doctory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/patient-book-appointment.js"></script>
+</body>
+</html>
